@@ -1,0 +1,100 @@
+#Crud básico en python para SQLite
+
+import time
+
+def clear_screen():
+    print("\n" * 50)
+    print("--------------------------------------------------")
+
+def mostrar_menu():
+    print('--- MENU PRINCIPAL ---')
+    print('1. Insertar un usuario')
+    print('2. Eliminar un usuario')
+    print('3. Buscar un usuario')
+    print('4. Actualizar datos de un usuario')
+    print('5. Mostrar todos los usuarios')
+    print('6. Salir')
+    print('--------------------------------------------------')
+
+def insertar_usuario(usuarios):
+    nombre = input('Ingrese el nombre del usuario: ')
+    correo = input('Ingrese el correo electrónico del usuario: ')
+    edad = input('Ingrese la edad del usuario: ')
+    
+    usuario = {
+        'nombre': nombre,
+        'correo': correo,
+        'edad': edad
+    }
+    
+    usuarios.append(usuario)
+    print('Usuario insertado correctamente')
+
+def eliminar_usuario(usuarios):
+    nombre = input('Ingrese el nombre del usuario a eliminar: ')
+    usuario = next((u for u in usuarios if u['nombre'] == nombre), None)
+    
+    if usuario:
+        usuarios.remove(usuario)
+        print('Usuario eliminado correctamente')
+    else:
+        print('El usuario no existe en la lista')
+
+def buscar_usuario(usuarios):
+    nombre = input('Ingrese el nombre del usuario a buscar: ')
+    usuario = next((u for u in usuarios if u['nombre'] == nombre), None)
+    
+    if usuario:
+        print(f"Usuario encontrado: Nombre: {usuario['nombre']}, Correo: {usuario['correo']}, Edad: {usuario['edad']}")
+    else:
+        print('El usuario no existe en la lista')
+
+def actualizar_usuario(usuarios):
+    nombre = input('Ingrese el nombre del usuario a actualizar: ')
+    usuario = next((u for u in usuarios if u['nombre'] == nombre), None)
+    
+    if usuario:
+        print(f"Datos actuales: Nombre: {usuario['nombre']}, Correo: {usuario['correo']}, Edad: {usuario['edad']}")
+        usuario['nombre'] = input('Ingrese el nuevo nombre (dejar en blanco para mantener el actual): ') or usuario['nombre']
+        usuario['correo'] = input('Ingrese el nuevo correo electrónico (dejar en blanco para mantener el actual): ') or usuario['correo']
+        usuario['edad'] = input('Ingrese la nueva edad (dejar en blanco para mantener la actual): ') or usuario['edad']
+        print('Datos del usuario actualizados correctamente')
+    else:
+        print('El usuario no existe en la lista')
+
+def mostrar_usuarios(usuarios):
+    if usuarios:
+        print('Lista de usuarios:')
+        for usuario in usuarios:
+            print(f"Nombre: {usuario['nombre']}, Correo: {usuario['correo']}, Edad: {usuario['edad']}")
+    else:
+        print('No hay usuarios en la lista')
+
+def main():
+    usuarios = []
+    while True:
+        clear_screen()
+        mostrar_menu()
+        opcion = input('Elige una opción: ')
+        clear_screen()
+        
+        if opcion == '1':
+            insertar_usuario(usuarios)
+        elif opcion == '2':
+            eliminar_usuario(usuarios)
+        elif opcion == '3':
+            buscar_usuario(usuarios)
+        elif opcion == '4':
+            actualizar_usuario(usuarios)
+        elif opcion == '5':
+            mostrar_usuarios(usuarios)
+        elif opcion == '6':
+            print('Saliendo del sistema...')
+            break
+        else:
+            print('Opción no válida, intente nuevamente.')
+
+        time.sleep(2)
+
+if __name__ == '__main__':
+    main()
